@@ -13,6 +13,7 @@ import org.n3r.excel.parser.ExcelFieldInstance;
 import org.n3r.excel.parser.ExcelObjectParser;
 import org.n3r.excel.reader.cell.CellReaderContext;
 import org.n3r.validator.EasyValidator;
+import org.n3r.validator.EasyValidatorInvoker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -129,7 +130,9 @@ public class ExcelReader {
                     getCell(position, cursor);
 
             Object cellValue = new CellReaderContext(field.getType()).read(cell, zeroIfNull);
-            // TODO: validation
+
+            EasyValidatorInvoker.invoke(cellValue, validators);
+
             setExcelFieldValue(field, excelBean, cellValue);
         }
 
